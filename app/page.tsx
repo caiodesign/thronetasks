@@ -1,39 +1,16 @@
-import TodoTable from "@/components/TodoTable";
+import HomeContainer from "@/app/containers/home";
 import { IActivity } from "@/types/activity";
-
-const data: IActivity[] = [
-  {
-    id: "m5gr84i9",
-    title: "my custom title",
-    description: "success",
-    done: false,
-  },
-  {
-    id: "3u1reuv4",
-    title: "my custom title",
-    description: "success",
-  },
-  {
-    id: "derv1ws0",
-    title: "my custom title",
-    description: "processing",
-  },
-  {
-    id: "5kma53ae",
-    title: "my custom title",
-    description: "success",
-  },
-  {
-    id: "bhqecj4p",
-    title: "my custom title",
-    description: "failed",
-  },
-];
+import { ActivitiesProvider } from "./hooks/use-activities/ActivitiesContext";
+import data from "@/activities.json";
 
 export default function Home() {
   return (
-    <div>
-      <TodoTable list={data} />
+    <div className="container mx-auto">
+      <div className="py-10">
+        <ActivitiesProvider initialActivities={data as IActivity[]}>
+          <HomeContainer />
+        </ActivitiesProvider>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 export type IActivity = {
-    id: string
-    title: string
-    description?: string
-    done?: boolean
-}
+  id: string;
+  type: "daily" | "weekly" | "challenge" | "custom";
+  title: string;
+  description?: string;
+  done?: boolean;
+};

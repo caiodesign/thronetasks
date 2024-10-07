@@ -1,0 +1,107 @@
+[
+  {
+    "id": "fulfill-contracts",
+    "type": "daily",
+    "title": "Fulfill contracts",
+    "description": "Visit the NPC, get all contracts, and complete the quests.",
+    "done": false
+  },
+  {
+    "id": "contract-coin-merchant",
+    "type": "daily",
+    "title": "Visit the contract coin merchant",
+    "description": "Exchange coins for rewards.",
+    "done": false
+  },
+  {
+    "id": "sundries-merchant",
+    "type": "daily",
+    "title": "Visit the Sundries Merchant",
+    "description": "Purchase consumables and materials.",
+    "done": false
+  },
+  {
+    "id": "guild-merchant",
+    "type": "daily",
+    "title": "Visit Guild Merchant",
+    "description": "Buy items for guild activities.",
+    "done": false
+  },
+  {
+    "id": "battle-pass-activities",
+    "type": "daily",
+    "title": "Complete Battle Pass activities",
+    "description": "Progress through daily Battle Pass tasks.",
+    "done": false
+  },
+  {
+    "id": "dimensional-contract-token",
+    "type": "daily",
+    "title": "Spend Dimensional contract token",
+    "description": "Use Dimensional contract tokens in the marketplace.",
+    "done": false
+  },
+  {
+    "id": "abyssal-contract-tokens",
+    "type": "daily",
+    "title": "Spend Abyssal Contract tokens",
+    "description": "Use Abyssal Contract tokens for rare items.",
+    "done": false
+  },
+  {
+    "id": "amitoi-expedition",
+    "type": "daily",
+    "title": "Amitoi Expedition",
+    "description": "Complete the Amitoi expedition quest.",
+    "done": false
+  },
+  {
+    "id": "world-boss-events",
+    "type": "daily",
+    "title": "World boss events",
+    "description": "Participate in world boss events.",
+    "done": false
+  },
+  {
+    "id": "gate-of-infinity",
+    "type": "weekly",
+    "title": "Gate of Infinity",
+    "description": "Enter the Gate of Infinity and defeat enemies.",
+    "done": false
+  },
+  {
+    "id": "weekly-missions",
+    "type": "weekly",
+    "title": "Weekly missions",
+    "description": "Complete weekly missions for rewards.",
+    "done": false
+  },
+  {
+    "id": "shop-ornate-coins",
+    "type": "weekly",
+    "title": "Spend Shop Ornate coins",
+    "description": "Use Ornate coins in the shop for weekly items.",
+    "done": false
+  },
+  {
+    "id": "battle-pass-weekly-activities",
+    "type": "weekly",
+    "title": "Battle Pass weekly activities",
+    "description": "Complete weekly tasks in the Battle Pass.",
+    "done": false
+  },
+  {
+    "id": "secret-dungeons",
+    "type": "challenge",
+    "title": "Complete Secret Dungeons",
+    "description": "Find and complete secret dungeons.",
+    "done": false
+  },
+  {
+    "id": "special-resistance-medal",
+    "type": "challenge",
+    "title": "Get 40 Special Resistance medal by doing world events",
+    "description": "Participate in world events to earn resistance medals.",
+    "done": false
+  }
+]
