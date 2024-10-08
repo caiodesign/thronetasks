@@ -12,6 +12,7 @@ interface ActivitiesContextType {
   addActivity: (newActivity: IActivity) => void;
   removeActivity: (id: string) => void;
   filterActivitiesByType: (type: IActivity["type"]) => IActivity[];
+  toggleAllByType: (type: IActivity["type"], done: boolean) => void;
 }
 
 // Initialize the context with an undefined default value
@@ -36,6 +37,7 @@ export const ActivitiesProvider = ({
     addActivity,
     removeActivity,
     filterActivitiesByType,
+    toggleAllByType,
   } = useActivities(initialActivities);
 
   return (
@@ -47,6 +49,7 @@ export const ActivitiesProvider = ({
         addActivity,
         removeActivity,
         filterActivitiesByType,
+        toggleAllByType,
       }}
     >
       {children}

@@ -2,6 +2,6 @@ import { IActivity } from "../activity";
 
 export type IActivitiesProps = {
   activities: IActivity[];
-  onToggleAll: () => void;
+  onToggleAll: (allSelected: boolean) => void;
   onActivityToggle: (id: string) => void;
 };

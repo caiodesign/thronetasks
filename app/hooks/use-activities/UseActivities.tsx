@@ -41,6 +41,16 @@ export default function useActivities(initialActivities: IActivity[]) {
     return activities.filter((activity) => activity.type === type);
   };
 
+  const toggleAllByType = (type: IActivity["type"], done: boolean) => {
+    activities
+      .filter((activity) => activity.type === type)
+      .forEach((activity) => {
+        if (activity.done !== done) {
+          toggleActivityDone(activity.id);
+        }
+      });
+  };
+
   return {
     activities,
     toggleActivityDone,
@@ -48,5 +58,6 @@ export default function useActivities(initialActivities: IActivity[]) {
     addActivity,
     removeActivity,
     filterActivitiesByType,
+    toggleAllByType,
   };
 }
