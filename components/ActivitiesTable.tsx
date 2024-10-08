@@ -19,6 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { IActivity } from "@/types/activity";
 import { InfoIcon } from "lucide-react";
 import { IActivitiesProps } from "@/types/components/activities-table";
+import { Badge } from "@/components/ui/badge";
 
 export default function ActivitiesTable({
   activities,
@@ -56,13 +57,20 @@ export default function ActivitiesTable({
                 aria-label="Select all"
               />
             </TableHead>
-            <TableHead>Task</TableHead>
-            <TableHead className="text-right">Status</TableHead>
+            <TableHead className="capitalize px-2 text-left align-middle font-medium text-muted-foreground ">
+              task
+            </TableHead>
+            <TableHead className="text-center capitalize px-2 align-middle font-medium text-muted-foreground">
+              status
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {activities.map((activity: IActivity) => (
-            <TableRow key={activity.id}>
+            <TableRow
+              key={activity.id}
+              className={`h-[54px] ${activity.done && "bg-secondary"}`}
+            >
               <TableCell>
                 <Checkbox
                   checked={selectedActivities.includes(activity.id)}
@@ -76,7 +84,7 @@ export default function ActivitiesTable({
                 <Tooltip>
                   <TooltipTrigger className="h-full align-middle">
                     <InfoIcon
-                      className="mx-2 h-4 w-4 text-muted-foreground opacity-30 hover:opacity-100 transition-opacity duration-200"
+                      className="mx-2 h-4 w-4 text-muted-foreground opacity-80 hover:opacity-100 transition-opacity duration-200"
                       fontSize={14}
                     />
                   </TooltipTrigger>
@@ -85,12 +93,16 @@ export default function ActivitiesTable({
                 </Tooltip>
               </TableCell>
 
-              <TableCell className="text-right pl-0">
+              <TableCell className="text-center px-0">
                 <button
                   className="text-blue-500 hover:underline"
                   onClick={() => toggleActivity(activity.id)}
                 >
-                  {activity.done ? "done" : "pending"}
+                  {activity.done ? (
+                    <Badge>done</Badge>
+                  ) : (
+                    <Badge variant="outline">pending</Badge>
+                  )}
                 </button>
               </TableCell>
             </TableRow>

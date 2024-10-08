@@ -89,19 +89,5 @@
     "title": "Battle Pass weekly activities",
     "description": "Complete weekly tasks in the Battle Pass.",
     "done": false
-  },
-  {
-    "id": "secret-dungeons",
-    "type": "challenge",
-    "title": "Complete Secret Dungeons",
-    "description": "Find and complete secret dungeons.",
-    "done": false
-  },
-  {
-    "id": "special-resistance-medal",
-    "type": "challenge",
-    "title": "Get 40 Special Resistance medal",
-    "description": "Participate in world events to earn resistance medals.",
-    "done": false
   }
 ]
