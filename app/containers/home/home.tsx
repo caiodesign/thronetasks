@@ -8,15 +8,20 @@ export default function HomeContainer() {
   return (
     <>
       <HomeHeader />
-      <HomeCharts />
       <div className="w-full flex justify-between">
         <ActivityCardTable type="daily">
           We have selected some important daily tasks that you may want to
           consider.
         </ActivityCardTable>
-        <ActivityCardTable type="weekly">
-          We have also selected some key weekly tasks that you may find useful.
-        </ActivityCardTable>
+        <div className="w-full">
+          <ActivityCardTable type="weekly">
+            We have also selected some key weekly tasks that you may find
+            useful.
+          </ActivityCardTable>
+          <div className="w-2/3 mt-3 ml-2">
+            <HomeCharts />
+          </div>
+        </div>
       </div>
     </>
   );

@@ -33,7 +33,7 @@ export default function ActivityCardTable({
   }
 
   return (
-    <div className="w-full mx-2 ">
+    <div className="w-full mx-2">
       <Card>
         <CardHeader>
           <div>
