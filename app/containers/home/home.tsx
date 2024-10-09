@@ -31,8 +31,8 @@ export default function HomeContainer() {
   return (
     <div className="mb-12">
       <HomeHeader />
-      <div className="flex">
-        <div className="w-2/4 mr-3">
+      <div className="m-3 md:flex md:m-0">
+        <div className="w-full mb-3 md:w-2/4 md:mr-3 md:mb-0">
           <ActivityCardTable
             className="mb-3"
             activities={dailyActivities}
@@ -54,8 +54,8 @@ export default function HomeContainer() {
           </ActivityCardTable>
         </div>
 
-        <div className="w-2/4">
-          <div className="w-3/3 ml-2">
+        <div className="w-full md:w-2/4">
+          <div className="w-3/3 md:ml-2">
             <HomeDashboard
               chartData={chartData}
               totalTasksDone={getTotalTasksDone()}

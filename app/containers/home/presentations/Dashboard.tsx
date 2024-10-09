@@ -6,6 +6,34 @@ import { calculateWeeklyChange } from "@/lib/dashboard";
 import { IDashboard } from "@/types/components/dashboard";
 import { MdAutoGraph } from "react-icons/md";
 
+const encouragementPhrases = [
+  "Well done!",
+  "Nice work!",
+  "Great effort!",
+  "Keep it up!",
+  "Awesome job!",
+  "Fantastic work!",
+  "You’re doing amazing!",
+  "Way to go!",
+  "Impressive!",
+  "Excellent progress!",
+  "You nailed it!",
+  "That's the way to do it!",
+  "Outstanding!",
+  "Keep crushing it!",
+  "You’re on the right track!",
+  "Brilliant work!",
+  "That’s the spirit!",
+  "You’ve got this!",
+  "Rock on!",
+  "You’re making great strides!",
+];
+
+function getRandomPhrase(phrases: string[]) {
+  const randomIndex = Math.floor(Math.random() * phrases.length);
+  return phrases[randomIndex];
+}
+
 export default function Dashboard({
   chartData,
   totalTasksDone,
@@ -20,7 +48,7 @@ export default function Dashboard({
   return (
     <>
       <div className="flex">
-        <Card className="mb-3 w-full mr-3">
+        <Card className="mb-3 w-full md:mr-3">
           <CardHeader className="pb-2">
             <div className="flex justify-between">
               <h4 className="text-sm font-medium tracking-tighter">Total</h4>
@@ -29,7 +57,11 @@ export default function Dashboard({
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">{totalTasksDone}</p>
-            <p className="text-xs text-muted-foreground">since october 2024</p>
+            <p className="text-xs text-muted-foreground">
+              {totalTasksDone
+                ? getRandomPhrase(encouragementPhrases)
+                : "complete a task to start"}
+            </p>
           </CardContent>
         </Card>
         <Card className="mb-3 w-full">

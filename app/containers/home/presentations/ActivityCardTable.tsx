@@ -37,15 +37,17 @@ export default function ActivityCardTable({
   }
 
   return (
-    <div className={`w-full mx-2 ${className}`}>
+    <div className={`w-full md:mx-2 ${className}`}>
       <Card>
         <CardHeader>
           <div>
-            <h3 className="text-3xl font-bold leading-tight tracking-tighter md:text-3xl">
+            <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-3xl">
               {type}
             </h3>
           </div>
-          <CardDescription>{children}</CardDescription>
+          <CardDescription className="text-sm md:text-md">
+            {children}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ActivitiesTable

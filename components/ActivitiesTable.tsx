@@ -79,11 +79,11 @@ export default function ActivitiesTable({
               </TableCell>
 
               <TableCell className="font-medium">
-                {activity.title}
+                <span>{activity.title}</span>
                 <Tooltip>
                   <TooltipTrigger className="h-full align-middle">
                     <InfoIcon
-                      className="mx-2 h-4 w-4 text-muted-foreground opacity-80 hover:opacity-100 transition-opacity duration-200"
+                      className="hidden sm:block mx-2 h-4 w-4 text-muted-foreground opacity-80 hover:opacity-100 transition-opacity duration-200"
                       fontSize={14}
                     />
                   </TooltipTrigger>
@@ -98,9 +98,16 @@ export default function ActivitiesTable({
                   onClick={() => toggleActivity(activity.id)}
                 >
                   {activity.done ? (
-                    <Badge>done</Badge>
+                    <Badge className="text-2xs">done</Badge>
                   ) : (
-                    <Badge variant="outline">pending</Badge>
+                    <>
+                      <Badge variant="outline" className="hidden md:block">
+                        pending
+                      </Badge>
+                      <Badge variant="outline" className="md:hidden">
+                        pend.
+                      </Badge>
+                    </>
                   )}
                 </button>
               </TableCell>

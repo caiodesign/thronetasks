@@ -10,11 +10,12 @@ export default function Footer() {
       >
         Caio
       </a>
-      . No ads, now and forever.{" "}
+      . No ads.{" "}
       <a
         className="underline underline-offset-4 hover:text-primary"
-        href="#"
+        href="https://www.paypal.com/donate/?hosted_button_id=XX88ARK7PHRYA"
         rel="noopener noreferrer"
+        target="_blank"
       >
         Support us
       </a>
