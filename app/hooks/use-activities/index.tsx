@@ -1,1 +1,1 @@
-export { default } from "./UseActivities";
+export { default } from "./useActivities";

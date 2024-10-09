@@ -1,6 +1,6 @@
 "use client";
 
-import { useActivitiesContext } from "@/app/hooks/use-activities/ActivitiesContext";
+import { useActivitiesContext } from "@/app/hooks/use-activities/activitiesContext";
 import ActivityCardTable from "./presentations/ActivityCardTable";
 import HomeHeader from "./presentations/Header";
 import HomeDashboard from "./presentations/Dashboard";
@@ -9,7 +9,6 @@ import { IActivity } from "@/types/activity";
 
 export default function HomeContainer() {
   const {
-    activities,
     toggleActivityDone,
     updateActivity,
     addActivity,
@@ -17,6 +16,9 @@ export default function HomeContainer() {
     filterActivitiesByType,
     toggleAllByType,
     chartData,
+    getTotalTasksDone,
+    getWeeklyTasksDone,
+    getLastWeeklyTasksDone,
   } = useActivitiesContext();
 
   const dailyActivities = filterActivitiesByType("daily");
@@ -32,6 +34,7 @@ export default function HomeContainer() {
       <div className="flex">
         <div className="w-2/4 mr-3">
           <ActivityCardTable
+            className="mb-3"
             activities={dailyActivities}
             type="daily"
             onToggle={(id) => toggleActivityDone(id)}
@@ -53,7 +56,12 @@ export default function HomeContainer() {
 
         <div className="w-2/4">
           <div className="w-3/3 ml-2">
-            <HomeDashboard chartData={chartData} />
+            <HomeDashboard
+              chartData={chartData}
+              totalTasksDone={getTotalTasksDone()}
+              weeklyTasksDone={getWeeklyTasksDone()}
+              lastWeeklyTasksDone={getLastWeeklyTasksDone()}
+            />
             <HomeFooter />
           </div>
         </div>

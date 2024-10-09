@@ -2,9 +2,21 @@
 
 import { ActivityChart } from "@/components/ActivityChart";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { calculateWeeklyChange } from "@/lib/dashboard";
+import { IDashboard } from "@/types/components/dashboard";
 import { MdAutoGraph } from "react-icons/md";
 
-export default function Dashboard({ chartData }: any) {
+export default function Dashboard({
+  chartData,
+  totalTasksDone,
+  weeklyTasksDone,
+  lastWeeklyTasksDone,
+}: IDashboard) {
+  const weeklyPercentage = calculateWeeklyChange(
+    lastWeeklyTasksDone,
+    weeklyTasksDone
+  );
+
   return (
     <>
       <div className="flex">
@@ -16,7 +28,7 @@ export default function Dashboard({ chartData }: any) {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">300</p>
+            <p className="text-2xl font-bold">{totalTasksDone}</p>
             <p className="text-xs text-muted-foreground">since october 2024</p>
           </CardContent>
         </Card>
@@ -30,12 +42,14 @@ export default function Dashboard({ chartData }: any) {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">+13</p>
-            <p className="text-xs text-muted-foreground">100% from last week</p>
+            <p className="text-2xl font-bold">{weeklyTasksDone}</p>
+            <p className="text-xs text-muted-foreground">
+              {weeklyPercentage}% from last week
+            </p>
           </CardContent>
         </Card>
       </div>
-      <ActivityChart data={chartData} />
+      <ActivityChart chartData={chartData} />
     </>
   );
 }

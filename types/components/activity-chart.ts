@@ -1,7 +1,9 @@
 export type IActivityChart = {
-  data: {
-    day: string;
-    daily: number;
-    weekly: number;
-  }[];
+  day: string;
+  daily: number;
+  weekly: number;
+};
+
+export type IActivityChartData = {
+  chartData: IActivityChart[];
 };

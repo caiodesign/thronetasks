@@ -9,6 +9,8 @@ import {
 
 const ACTIVITIES_KEY = "activities";
 const CHART_DATA_KEY = "chartData";
+const TOTAL_DONE_KEY = "totalTasksDone";
+const TOTAL_LAST_WEEKLY_DONE_KEY = "totalLastWeeklyTasksDone";
 
 const resetTasks = (activities: IActivity[], type: IActivity["type"]) => {
   return activities.map((activity) =>
@@ -35,6 +37,10 @@ export default function useActivities(initialActivities: IActivity[]) {
     loadFromLocalStorage(CHART_DATA_KEY) || defaultChartData
   );
 
+  const [totalTasksDone, setTotalTasksDone] = useState(
+    loadFromLocalStorage(TOTAL_DONE_KEY) || 0
+  );
+
   const saveActivities = (updatedActivities: IActivity[]) => {
     saveToLocalStorage(ACTIVITIES_KEY, updatedActivities);
     setActivities(updatedActivities);
@@ -59,7 +65,8 @@ export default function useActivities(initialActivities: IActivity[]) {
       (activity) => activity.type === "weekly" && activity.done
     ).length;
 
-    const updatedChartData = chartData.map((entry) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updatedChartData = chartData.map((entry: any) =>
       entry.day === today
         ? { ...entry, daily: dailyCount, weekly: weeklyCount }
         : entry
@@ -68,11 +75,44 @@ export default function useActivities(initialActivities: IActivity[]) {
     saveChartData(updatedChartData);
   };
 
+  const incrementTaskCounters = () => {
+    setTotalTasksDone((prevTotal: number) => {
+      const newTotal = prevTotal + 1;
+      saveToLocalStorage(TOTAL_DONE_KEY, newTotal);
+      return newTotal;
+    });
+  };
+
+  const decreaseTaskCounters = () => {
+    setTotalTasksDone((prevTotal: number) => {
+      const newTotal = prevTotal - 1;
+      saveToLocalStorage(TOTAL_DONE_KEY, newTotal);
+      return newTotal;
+    });
+  };
+
   const toggleActivityDone = (id: string) => {
     const updatedActivities = activities.map((activity) =>
       activity.id === id ? { ...activity, done: !activity.done } : activity
     );
+
+    // Increment counters if task is marked as done
+    const toggledActivity = updatedActivities.find(
+      (activity) => activity.id === id
+    );
+
+    if (toggledActivity && toggledActivity.done) {
+      incrementTaskCounters();
+    } else {
+      decreaseTaskCounters();
+    }
+
     saveActivities(updatedActivities);
+  };
+
+  const updateWeeklyDone = () => {
+    const thisWeekDone = activities.filter((activity) => activity.done).length;
+    saveToLocalStorage(TOTAL_LAST_WEEKLY_DONE_KEY, thisWeekDone);
   };
 
   const toggleAllByType = (type: IActivity["type"], done: boolean) => {
@@ -105,6 +145,18 @@ export default function useActivities(initialActivities: IActivity[]) {
     return activities.filter((activity) => activity.type === type);
   };
 
+  const getTotalTasksDone = () => {
+    return loadFromLocalStorage(TOTAL_DONE_KEY);
+  };
+
+  const getWeeklyTasksDone = () => {
+    return activities.filter((activity) => activity.done).length;
+  };
+
+  const getLastWeeklyTasksDone = () => {
+    return loadFromLocalStorage(TOTAL_LAST_WEEKLY_DONE_KEY);
+  };
+
   useEffect(() => {
     const now = new Date();
     const nextDailyReset = new Date();
@@ -127,6 +179,7 @@ export default function useActivities(initialActivities: IActivity[]) {
     }, dailyTimeout);
 
     const weeklyTimer = setTimeout(() => {
+      updateWeeklyDone();
       const updatedActivities = resetTasks(activities, "weekly");
       saveActivities(updatedActivities);
     }, weeklyTimeout);
@@ -140,11 +193,15 @@ export default function useActivities(initialActivities: IActivity[]) {
   return {
     activities,
     chartData,
+    totalTasksDone,
     toggleActivityDone,
     updateActivity,
     addActivity,
     removeActivity,
     filterActivitiesByType,
     toggleAllByType,
+    getTotalTasksDone,
+    getWeeklyTasksDone,
+    getLastWeeklyTasksDone,
   };
 }

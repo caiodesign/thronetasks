@@ -37,7 +37,6 @@ export default function ActivitiesTable({
   };
 
   const toggleActivity = (id: string) => {
-    console.log(id);
     setSelectedActivities((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
@@ -73,7 +72,7 @@ export default function ActivitiesTable({
             >
               <TableCell>
                 <Checkbox
-                  checked={selectedActivities.includes(activity.id)}
+                  checked={activity.done}
                   onCheckedChange={() => toggleActivity(activity.id)}
                   aria-label={`Select activity ${activity.id}`}
                 />
