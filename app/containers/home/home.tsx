@@ -10,9 +10,6 @@ import { IActivity } from "@/types/activity";
 export default function HomeContainer() {
   const {
     toggleActivityDone,
-    updateActivity,
-    addActivity,
-    removeActivity,
     filterActivitiesByType,
     toggleAllByType,
     chartData,

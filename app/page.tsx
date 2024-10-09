@@ -1,6 +1,6 @@
 import HomeContainer from "@/app/containers/home";
 import { IActivity } from "@/types/activity";
-import { ActivitiesProvider } from "./hooks/use-activities/activitiesContext";
+import { ActivitiesProvider } from "@/app/hooks/use-activities/activitiesContext";
 import data from "@/activities.json";
 
 export default function Home() {

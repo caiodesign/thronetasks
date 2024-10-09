@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const saveToLocalStorage = (key: string, data: any) => {
-  localStorage.setItem(key, JSON.stringify(data));
+  if (typeof window !== "undefined") {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 };
 
 export const loadFromLocalStorage = (key: string) => {
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : null;
+  if (typeof window !== "undefined") {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  }
 };
