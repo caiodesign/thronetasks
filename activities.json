@@ -2,99 +2,99 @@
   {
     "id": "fulfill-contracts",
     "type": "daily",
-    "title": "Fulfill contracts",
-    "description": "Visit the NPC, get all contracts, and complete the quests.",
+    "title": "Fulfill Contracts",
+    "description": "Visit the Contract Manager NPC, collect all contracts, and complete the quests.",
     "done": false
   },
   {
     "id": "contract-coin-merchant",
     "type": "daily",
-    "title": "Visit the contract coin merchant",
-    "description": "Exchange coins for rewards.",
+    "title": "Visit the Contract Coin Merchant",
+    "description": "Exchange coins for a Mystic Key. You can also get a Precious Blessing Pouch if you're aiming for epic gear.",
+    "done": false
+  },
+  {
+    "id": "guild-merchant",
+    "type": "daily",
+    "title": "Visit the Guild Merchant",
+    "description": "Purchase a Precious Polished Crystal and a Precious Base Material Selection Chest.",
     "done": false
   },
   {
     "id": "sundries-merchant",
     "type": "daily",
     "title": "Visit the Sundries Merchant",
-    "description": "Purchase consumables and materials.",
-    "done": false
-  },
-  {
-    "id": "guild-merchant",
-    "type": "daily",
-    "title": "Visit Guild Merchant",
-    "description": "Buy items for guild activities.",
-    "done": false
-  },
-  {
-    "id": "battle-pass-activities",
-    "type": "daily",
-    "title": "Complete Battle Pass activities",
-    "description": "Progress through daily Battle Pass tasks.",
+    "description": "Purchase all daily limited foods. You may also want to buy additional contracts.",
     "done": false
   },
   {
     "id": "dimensional-contract-token",
     "type": "daily",
-    "title": "Spend Dimensional contract token",
-    "description": "Use Dimensional contract tokens in the marketplace.",
+    "title": "Spend Dimensional Contract Token",
+    "description": "Avoid hitting the dimensional token cap by completing co-op dungeons daily.",
     "done": false
   },
   {
     "id": "abyssal-contract-tokens",
     "type": "daily",
-    "title": "Spend Abyssal Contract tokens",
-    "description": "Use Abyssal Contract tokens for rare items.",
+    "title": "Spend Abyssal Contract Tokens",
+    "description": "Avoid hitting the abyssal token cap by defeating mobs in abyssal areas.",
     "done": false
   },
   {
     "id": "amitoi-expedition",
     "type": "daily",
     "title": "Amitoi Expedition",
-    "description": "Complete the Amitoi expedition quest.",
+    "description": "Don't forget to send your Amitoi on an 8-hour expedition.",
     "done": false
   },
   {
     "id": "world-boss-events",
     "type": "daily",
-    "title": "World boss events",
-    "description": "Participate in world boss events.",
+    "title": "World Boss Events",
+    "description": "Participate in world boss events to earn valuable items and a Special Resistance Medal.",
+    "done": false
+  },
+  {
+    "id": "battle-pass-activities",
+    "type": "daily",
+    "title": "(Optional) Complete Battle Pass Activities",
+    "description": "Progress through daily Battle Pass tasks.",
+    "done": false
+  },
+  {
+    "id": "special-resistance-medal",
+    "type": "daily",
+    "title": "(Optional) Complete World Events",
+    "description": "Try to complete at least 1 event per day. You can exchange 40 Special Resistance Medals for an epic item.",
     "done": false
   },
   {
     "id": "gate-of-infinity",
     "type": "weekly",
     "title": "Gate of Infinity",
-    "description": "Enter the Gate of Infinity and defeat enemies.",
+    "description": "Enter the Gate of Infinity and defeat the enemies.",
     "done": false
   },
   {
     "id": "weekly-missions",
     "type": "weekly",
-    "title": "Weekly missions",
-    "description": "Complete weekly missions for rewards.",
+    "title": "Weekly Missions",
+    "description": "Complete weekly missions for rewards. You can view these in the Missions menu (ESC).",
     "done": false
   },
   {
     "id": "shop-ornate-coins",
     "type": "weekly",
-    "title": "Spend Shop Ornate coins",
-    "description": "Use Ornate coins in the shop for weekly items.",
+    "title": "Spend Shop Ornate Coins",
+    "description": "Use Ornate Coins in the shop to purchase weekly items.",
     "done": false
   },
   {
-    "id": "battle-pass-weekly-activities",
+    "id": "weekly-guild-boss",
     "type": "weekly",
-    "title": "Battle Pass weekly activities",
-    "description": "Complete weekly tasks in the Battle Pass.",
-    "done": false
-  },
-  {
-    "id": "weekly-boss-guild",
-    "type": "weekly",
-    "title": "Weekly Guild boss",
-    "description": "Defeat at least 1 boss per week",
+    "title": "Weekly Guild Boss",
+    "description": "Defeat at least one guild boss per week.",
     "done": false
   }
 ]

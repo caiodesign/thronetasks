@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { calculateWeeklyChange } from "@/lib/dashboard";
 import { IDashboard } from "@/types/components/dashboard";
 import { MdAutoGraph } from "react-icons/md";
+import { IoMdDoneAll } from "react-icons/io";
 
 const encouragementPhrases = [
   "Well done!",
@@ -52,11 +53,11 @@ export default function Dashboard({
           <CardHeader className="pb-2">
             <div className="flex justify-between">
               <h4 className="text-sm font-medium tracking-tighter">Total</h4>
-              <MdAutoGraph className="text-muted-foreground" />
+              <IoMdDoneAll className="text-muted-foreground" />
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{totalTasksDone}</p>
+            <p className="text-2xl font-bold">{totalTasksDone || 0}</p>
             <p className="text-xs text-muted-foreground">
               {totalTasksDone
                 ? getRandomPhrase(encouragementPhrases)

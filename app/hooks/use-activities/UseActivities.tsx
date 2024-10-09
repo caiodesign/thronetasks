@@ -8,10 +8,12 @@ import {
   saveToLocalStorage,
 } from "@/lib/localstorage-helper";
 
-const ACTIVITIES_KEY = "activities";
-const CHART_DATA_KEY = "chartData";
-const TOTAL_DONE_KEY = "totalTasksDone";
-const TOTAL_LAST_WEEKLY_DONE_KEY = "totalLastWeeklyTasksDone";
+import {
+  ACTIVITIES_KEY,
+  CHART_DATA_KEY,
+  TOTAL_DONE_KEY,
+  TOTAL_LAST_WEEKLY_DONE_KEY,
+} from "@/app/constants/activities";
 
 const resetTasks = (activities: IActivity[], type: IActivity["type"]) => {
   return activities.map((activity) =>
@@ -117,9 +119,18 @@ export default function useActivities(initialActivities: IActivity[]) {
   };
 
   const toggleAllByType = (type: IActivity["type"], done: boolean) => {
-    const updatedActivities = activities.map((activity) =>
-      activity.type === type ? { ...activity, done } : activity
-    );
+    const updatedActivities = activities.map((activity) => {
+      if (activity.type === type && activity.done !== done) {
+        if (done) {
+          incrementTaskCounters(); // Increment if marking as done
+        } else {
+          decreaseTaskCounters(); // Decrease if marking as undone
+        }
+        return { ...activity, done };
+      }
+      return activity;
+    });
+
     saveActivities(updatedActivities);
   };
 

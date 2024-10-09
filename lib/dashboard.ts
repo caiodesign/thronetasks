@@ -2,6 +2,9 @@ export function calculateWeeklyChange(
   lastWeekTotal: number,
   currentWeekTotal: number
 ): string {
+  if (!lastWeekTotal) lastWeekTotal = 0;
+  if (!currentWeekTotal) currentWeekTotal = 0;
+
   if (lastWeekTotal === 0) {
     return currentWeekTotal > 0 ? "+100" : "0"; // Special case for 100% gain if last week was zero
   }

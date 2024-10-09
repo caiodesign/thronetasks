@@ -44,6 +44,10 @@ export default function ActivitiesTable({
     onActivityToggle(id);
   };
 
+  function areAllActivitiesDone() {
+    return activities.every((activity) => activity.done);
+  }
+
   return (
     <TooltipProvider delayDuration={100}>
       <Table>
@@ -51,7 +55,7 @@ export default function ActivitiesTable({
           <TableRow>
             <TableHead>
               <Checkbox
-                checked={selectedActivities.length === activities.length}
+                checked={areAllActivitiesDone()}
                 onCheckedChange={toggleAll}
                 aria-label="Select all"
               />
