@@ -1,55 +1,112 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IActivity } from "@/types/activity";
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from "@/lib/localstorage-helper";
+
+const ACTIVITIES_KEY = "activities";
+
+// Resets specific types of tasks by setting `done` to false
+const resetTasks = (activities: IActivity[], type: IActivity["type"]) => {
+  return activities.map((activity) =>
+    activity.type === type ? { ...activity, done: false } : activity
+  );
+};
 
 export default function useActivities(initialActivities: IActivity[]) {
-  const [activities, setActivities] = useState<IActivity[]>(initialActivities);
+  const [activities, setActivities] = useState<IActivity[]>(
+    loadFromLocalStorage(ACTIVITIES_KEY) || initialActivities
+  );
 
-  // Function to toggle the 'done' state of a specific activity
+  // Save activities to localStorage whenever they are updated
+  const saveActivities = (updatedActivities: IActivity[]) => {
+    saveToLocalStorage(ACTIVITIES_KEY, updatedActivities);
+    setActivities(updatedActivities);
+  };
+
+  // Toggle the 'done' state of a specific activity
   const toggleActivityDone = (id: string) => {
-    setActivities((prevActivities) =>
-      prevActivities.map((activity) =>
-        activity.id === id ? { ...activity, done: !activity.done } : activity
-      )
+    const updatedActivities = activities.map((activity) =>
+      activity.id === id ? { ...activity, done: !activity.done } : activity
     );
+    saveActivities(updatedActivities);
   };
 
-  // Function to update a specific activity's properties
+  // Update a specific activity's properties
   const updateActivity = (id: string, updates: Partial<IActivity>) => {
-    setActivities((prevActivities) =>
-      prevActivities.map((activity) =>
-        activity.id === id ? { ...activity, ...updates } : activity
-      )
+    const updatedActivities = activities.map((activity) =>
+      activity.id === id ? { ...activity, ...updates } : activity
     );
+    saveActivities(updatedActivities);
   };
 
-  // Function to add a new activity
+  // Add a new activity
   const addActivity = (newActivity: IActivity) => {
-    setActivities((prevActivities) => [...prevActivities, newActivity]);
+    const updatedActivities = [...activities, newActivity];
+    saveActivities(updatedActivities);
   };
 
-  // Function to remove an activity
+  // Remove an activity
   const removeActivity = (id: string) => {
-    setActivities((prevActivities) =>
-      prevActivities.filter((activity) => activity.id !== id)
+    const updatedActivities = activities.filter(
+      (activity) => activity.id !== id
     );
+    saveActivities(updatedActivities);
   };
 
-  // Function to filter activities by type
+  // Filter activities by type
   const filterActivitiesByType = (type: IActivity["type"]) => {
     return activities.filter((activity) => activity.type === type);
   };
 
+  // Toggle the 'done' state for all activities of a specific type
   const toggleAllByType = (type: IActivity["type"], done: boolean) => {
-    activities
-      .filter((activity) => activity.type === type)
-      .forEach((activity) => {
-        if (activity.done !== done) {
-          toggleActivityDone(activity.id);
-        }
-      });
+    const updatedActivities = activities.map((activity) =>
+      activity.type === type ? { ...activity, done } : activity
+    );
+    saveActivities(updatedActivities);
   };
+
+  // Reset daily and weekly tasks at specific times
+  useEffect(() => {
+    const now = new Date();
+
+    // Calculate the next reset times for daily and weekly tasks
+    const nextDailyReset = new Date();
+    nextDailyReset.setHours(3, 0, 0, 0);
+    if (now >= nextDailyReset)
+      nextDailyReset.setDate(nextDailyReset.getDate() + 1);
+
+    const nextWeeklyReset = new Date();
+    nextWeeklyReset.setHours(3, 0, 0, 0);
+    nextWeeklyReset.setDate(
+      nextWeeklyReset.getDate() + ((8 - nextWeeklyReset.getDay()) % 7)
+    );
+
+    // Calculate the time until the next resets
+    const dailyTimeout = nextDailyReset.getTime() - now.getTime();
+    const weeklyTimeout = nextWeeklyReset.getTime() - now.getTime();
+
+    // Set timers to reset tasks
+    const dailyTimer = setTimeout(() => {
+      const updatedActivities = resetTasks(activities, "daily");
+      saveActivities(updatedActivities);
+    }, dailyTimeout);
+
+    const weeklyTimer = setTimeout(() => {
+      const updatedActivities = resetTasks(activities, "weekly");
+      saveActivities(updatedActivities);
+    }, weeklyTimeout);
+
+    // Cleanup timers on component unmount
+    return () => {
+      clearTimeout(dailyTimer);
+      clearTimeout(weeklyTimer);
+    };
+  }, [activities]);
 
   return {
     activities,

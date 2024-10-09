@@ -8,30 +8,32 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import { useActivitiesContext } from "@/app/hooks/use-activities/ActivitiesContext";
 
 export default function ActivityCardTable({
+  activities,
+  onToggle,
+  onToggleAll,
   type,
-  className,
   children,
+  className,
 }: {
+  activities: IActivity[];
+  onToggle: (id: IActivity["id"]) => void;
+  onToggleAll: (type: IActivity["type"], allSelected: boolean) => void;
   type: IActivity["type"];
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }) {
-  const { activities, toggleActivityDone, toggleAllByType } =
-    useActivitiesContext();
-
-  function onToggleAll(type: IActivity["type"]) {
+  function toggleAll() {
     const allSelected = activities
       .filter((activity) => activity.type === type)
       .every((activity) => activity.done);
 
-    toggleAllByType(type, !allSelected);
+    onToggleAll(type, !allSelected);
   }
 
-  function onActivityToggle(id: string) {
-    toggleActivityDone(id);
+  function toggleAcitivity(id: string) {
+    onToggle(id);
   }
 
   return (
@@ -47,9 +49,9 @@ export default function ActivityCardTable({
         </CardHeader>
         <CardContent>
           <ActivitiesTable
-            activities={activities.filter((act) => act.type == type)}
-            onToggleAll={() => onToggleAll(type)}
-            onActivityToggle={onActivityToggle}
+            activities={activities}
+            onToggleAll={toggleAll}
+            onActivityToggle={toggleAcitivity}
           />
         </CardContent>
       </Card>
