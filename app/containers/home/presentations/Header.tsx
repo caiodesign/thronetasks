@@ -5,8 +5,17 @@ export default function Header() {
         Throne and Liberty reminder
       </h1>
       <p className=" text-lg font-light text-foreground">
-        Send us your suggestions! You can also donate to support the development
-        of new features.
+        <a
+          className="underline underline-offset-4 hover:text-primary"
+          href="mailto:caiooliveiras@live.com"
+        >
+          Send
+        </a>{" "}
+        us your suggestions! You can also{" "}
+        <a className="underline underline-offset-4 hover:text-primary" href="#">
+          donate
+        </a>{" "}
+        to support the development of new features.
       </p>
     </section>
   );

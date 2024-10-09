@@ -89,5 +89,12 @@
     "title": "Battle Pass weekly activities",
     "description": "Complete weekly tasks in the Battle Pass.",
     "done": false
+  },
+  {
+    "id": "weekly-boss-guild",
+    "type": "weekly",
+    "title": "Weekly Guild boss",
+    "description": "Defeat at least 1 boss per week",
+    "done": false
   }
 ]

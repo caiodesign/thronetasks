@@ -49,6 +49,8 @@ export function ActivityChart({ data }: IActivityChart) {
             <BarChart
               data={data}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              barSize={20}
+              barGap={2}
             >
               <CartesianGrid
                 strokeDasharray="3 3"

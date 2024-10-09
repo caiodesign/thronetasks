@@ -12,10 +12,12 @@ import { useActivitiesContext } from "@/app/hooks/use-activities/ActivitiesConte
 
 export default function ActivityCardTable({
   type,
+  className,
   children,
 }: {
   type: IActivity["type"];
   children: React.ReactNode;
+  className?: string;
 }) {
   const { activities, toggleActivityDone, toggleAllByType } =
     useActivitiesContext();
@@ -33,7 +35,7 @@ export default function ActivityCardTable({
   }
 
   return (
-    <div className="w-full mx-2">
+    <div className={`w-full mx-2 ${className}`}>
       <Card>
         <CardHeader>
           <div>
