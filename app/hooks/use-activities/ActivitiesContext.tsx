@@ -7,6 +7,7 @@ import useActivities from "./UseActivities";
 // Define the type for our context
 interface ActivitiesContextType {
   activities: IActivity[];
+  chartData: { day: string; daily: number; weekly: number }[];
   toggleActivityDone: (id: string) => void;
   updateActivity: (id: string, updates: Partial<IActivity>) => void;
   addActivity: (newActivity: IActivity) => void;
@@ -15,12 +16,10 @@ interface ActivitiesContextType {
   toggleAllByType: (type: IActivity["type"], done: boolean) => void;
 }
 
-// Initialize the context with an undefined default value
 const ActivitiesContext = createContext<ActivitiesContextType | undefined>(
   undefined
 );
 
-// Create the provider component
 interface ActivitiesProviderProps {
   children: ReactNode;
   initialActivities: IActivity[];
@@ -32,6 +31,7 @@ export const ActivitiesProvider = ({
 }: ActivitiesProviderProps) => {
   const {
     activities,
+    chartData,
     toggleActivityDone,
     updateActivity,
     addActivity,
@@ -44,6 +44,7 @@ export const ActivitiesProvider = ({
     <ActivitiesContext.Provider
       value={{
         activities,
+        chartData,
         toggleActivityDone,
         updateActivity,
         addActivity,
@@ -57,7 +58,6 @@ export const ActivitiesProvider = ({
   );
 };
 
-// Custom hook to use the activities context
 export const useActivitiesContext = () => {
   const context = useContext(ActivitiesContext);
   if (!context) {

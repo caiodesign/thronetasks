@@ -8,8 +8,8 @@ import {
 } from "@/lib/localstorage-helper";
 
 const ACTIVITIES_KEY = "activities";
+const CHART_DATA_KEY = "chartData";
 
-// Resets specific types of tasks by setting `done` to false
 const resetTasks = (activities: IActivity[], type: IActivity["type"]) => {
   return activities.map((activity) =>
     activity.type === type ? { ...activity, done: false } : activity
@@ -21,13 +21,53 @@ export default function useActivities(initialActivities: IActivity[]) {
     loadFromLocalStorage(ACTIVITIES_KEY) || initialActivities
   );
 
-  // Save activities to localStorage whenever they are updated
+  const defaultChartData = [
+    { day: "monday", daily: 0, weekly: 0 },
+    { day: "tuesday", daily: 0, weekly: 0 },
+    { day: "wednesday", daily: 0, weekly: 0 },
+    { day: "thursday", daily: 0, weekly: 0 },
+    { day: "friday", daily: 0, weekly: 0 },
+    { day: "saturday", daily: 0, weekly: 0 },
+    { day: "sunday", daily: 0, weekly: 0 },
+  ];
+
+  const [chartData, setChartData] = useState(
+    loadFromLocalStorage(CHART_DATA_KEY) || defaultChartData
+  );
+
   const saveActivities = (updatedActivities: IActivity[]) => {
     saveToLocalStorage(ACTIVITIES_KEY, updatedActivities);
     setActivities(updatedActivities);
+    updateChartData(updatedActivities);
   };
 
-  // Toggle the 'done' state of a specific activity
+  const saveChartData = (updatedChartData: typeof defaultChartData) => {
+    saveToLocalStorage(CHART_DATA_KEY, updatedChartData);
+    setChartData(updatedChartData);
+  };
+
+  const updateChartData = (updatedActivities: IActivity[]) => {
+    const today = new Date()
+      .toLocaleString("en-US", { weekday: "long" })
+      .toLowerCase();
+
+    const dailyCount = updatedActivities.filter(
+      (activity) => activity.type === "daily" && activity.done
+    ).length;
+
+    const weeklyCount = updatedActivities.filter(
+      (activity) => activity.type === "weekly" && activity.done
+    ).length;
+
+    const updatedChartData = chartData.map((entry) =>
+      entry.day === today
+        ? { ...entry, daily: dailyCount, weekly: weeklyCount }
+        : entry
+    );
+
+    saveChartData(updatedChartData);
+  };
+
   const toggleActivityDone = (id: string) => {
     const updatedActivities = activities.map((activity) =>
       activity.id === id ? { ...activity, done: !activity.done } : activity
@@ -35,34 +75,6 @@ export default function useActivities(initialActivities: IActivity[]) {
     saveActivities(updatedActivities);
   };
 
-  // Update a specific activity's properties
-  const updateActivity = (id: string, updates: Partial<IActivity>) => {
-    const updatedActivities = activities.map((activity) =>
-      activity.id === id ? { ...activity, ...updates } : activity
-    );
-    saveActivities(updatedActivities);
-  };
-
-  // Add a new activity
-  const addActivity = (newActivity: IActivity) => {
-    const updatedActivities = [...activities, newActivity];
-    saveActivities(updatedActivities);
-  };
-
-  // Remove an activity
-  const removeActivity = (id: string) => {
-    const updatedActivities = activities.filter(
-      (activity) => activity.id !== id
-    );
-    saveActivities(updatedActivities);
-  };
-
-  // Filter activities by type
-  const filterActivitiesByType = (type: IActivity["type"]) => {
-    return activities.filter((activity) => activity.type === type);
-  };
-
-  // Toggle the 'done' state for all activities of a specific type
   const toggleAllByType = (type: IActivity["type"], done: boolean) => {
     const updatedActivities = activities.map((activity) =>
       activity.type === type ? { ...activity, done } : activity
@@ -70,11 +82,31 @@ export default function useActivities(initialActivities: IActivity[]) {
     saveActivities(updatedActivities);
   };
 
-  // Reset daily and weekly tasks at specific times
+  const updateActivity = (id: string, updates: Partial<IActivity>) => {
+    const updatedActivities = activities.map((activity) =>
+      activity.id === id ? { ...activity, ...updates } : activity
+    );
+    saveActivities(updatedActivities);
+  };
+
+  const addActivity = (newActivity: IActivity) => {
+    const updatedActivities = [...activities, newActivity];
+    saveActivities(updatedActivities);
+  };
+
+  const removeActivity = (id: string) => {
+    const updatedActivities = activities.filter(
+      (activity) => activity.id !== id
+    );
+    saveActivities(updatedActivities);
+  };
+
+  const filterActivitiesByType = (type: IActivity["type"]) => {
+    return activities.filter((activity) => activity.type === type);
+  };
+
   useEffect(() => {
     const now = new Date();
-
-    // Calculate the next reset times for daily and weekly tasks
     const nextDailyReset = new Date();
     nextDailyReset.setHours(3, 0, 0, 0);
     if (now >= nextDailyReset)
@@ -86,11 +118,9 @@ export default function useActivities(initialActivities: IActivity[]) {
       nextWeeklyReset.getDate() + ((8 - nextWeeklyReset.getDay()) % 7)
     );
 
-    // Calculate the time until the next resets
     const dailyTimeout = nextDailyReset.getTime() - now.getTime();
     const weeklyTimeout = nextWeeklyReset.getTime() - now.getTime();
 
-    // Set timers to reset tasks
     const dailyTimer = setTimeout(() => {
       const updatedActivities = resetTasks(activities, "daily");
       saveActivities(updatedActivities);
@@ -101,7 +131,6 @@ export default function useActivities(initialActivities: IActivity[]) {
       saveActivities(updatedActivities);
     }, weeklyTimeout);
 
-    // Cleanup timers on component unmount
     return () => {
       clearTimeout(dailyTimer);
       clearTimeout(weeklyTimer);
@@ -110,6 +139,7 @@ export default function useActivities(initialActivities: IActivity[]) {
 
   return {
     activities,
+    chartData,
     toggleActivityDone,
     updateActivity,
     addActivity,
