@@ -59,9 +59,12 @@ export default function HomeContainer() {
       <div className="m-3 md:flex md:m-0">
         <div className="w-full mb-3 md:w-2/4 md:mr-3 md:mb-0">
           <Tabs defaultValue="daily">
-            <TabsList className="grid w-full grid-cols-2 md:mx-2">
+            <TabsList className="grid w-full grid-cols-3 md:mx-2">
               <TabsTrigger value="daily">Daily</TabsTrigger>
               <TabsTrigger value="weekly">Weekly</TabsTrigger>
+              <TabsTrigger value="pvp" disabled>
+                PVP (soon)
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="daily">
               <ActivityCardTable
@@ -89,6 +92,9 @@ export default function HomeContainer() {
                 We have also selected some key weekly tasks that you may find
                 useful.
               </ActivityCardTable>
+            </TabsContent>
+            <TabsContent value="pvp">
+              <div>soon</div>
             </TabsContent>
           </Tabs>
         </div>
