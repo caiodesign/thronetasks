@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import ActivitiesTable from "@/components/ActivitiesTable";
 import { IActivity } from "@/types/activity";
 import { Button } from "@/components/ui/button";
