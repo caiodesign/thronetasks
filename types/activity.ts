@@ -4,4 +4,5 @@ export type IActivity = {
   title: string;
   description?: string;
   done?: boolean;
+  custom?: boolean;
 };

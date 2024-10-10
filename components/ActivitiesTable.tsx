@@ -25,6 +25,7 @@ export default function ActivitiesTable({
   activities,
   onToggleAll,
   onActivityToggle,
+  onRemove,
 }: IActivitiesProps) {
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const toggleAll = () => {
@@ -63,7 +64,7 @@ export default function ActivitiesTable({
             <TableHead className="capitalize px-2 text-left align-middle font-medium text-muted-foreground ">
               task
             </TableHead>
-            <TableHead className="text-center capitalize px-2 align-middle font-medium text-muted-foreground">
+            <TableHead className="text-center capitalize px-2 align-middle font-medium text-muted-foreground w-[30px]">
               status
             </TableHead>
           </TableRow>
@@ -84,23 +85,31 @@ export default function ActivitiesTable({
 
               <TableCell className="font-medium">
                 <span className="text-xs md:text-sm">{activity.title}</span>
-                <Tooltip>
-                  <TooltipTrigger className="h-full align-middle">
-                    <InfoIcon
-                      className="hidden sm:block mx-2 h-4 w-4 text-muted-foreground opacity-80 hover:opacity-100 transition-opacity duration-200"
-                      fontSize={14}
-                    />
-                  </TooltipTrigger>
+                {activity.custom ? (
+                  <button onClick={() => onRemove(activity.id)}>
+                    <Badge
+                      variant="outline"
+                      className="ml-2 cursor-pointer transition-text duration-200 hover:bg-primary hover:text-secondary"
+                    >
+                      delete
+                    </Badge>
+                  </button>
+                ) : (
+                  <Tooltip>
+                    <TooltipTrigger className="h-full align-middle">
+                      <InfoIcon
+                        className="hidden sm:block mx-2 h-4 w-4 text-muted-foreground opacity-80 hover:opacity-100 transition-opacity duration-200"
+                        fontSize={14}
+                      />
+                    </TooltipTrigger>
 
-                  <TooltipContent>{activity.description}</TooltipContent>
-                </Tooltip>
+                    <TooltipContent>{activity.description}</TooltipContent>
+                  </Tooltip>
+                )}
               </TableCell>
 
               <TableCell className="text-center px-0">
-                <button
-                  className="text-blue-500 hover:underline"
-                  onClick={() => toggleActivity(activity.id)}
-                >
+                <button onClick={() => toggleActivity(activity.id)}>
                   {activity.done ? (
                     <Badge className="text-2xs">done</Badge>
                   ) : (

@@ -20,24 +20,20 @@ export function ThemeButtons({
 
   return (
     <div className={`flex ${className}`}>
-      <a
-        className="mr-2"
-        href="javascript:void(0)"
-        onClick={() => setTheme("light")}
-      >
+      <span className="mr-2 cursor-pointer" onClick={() => setTheme("light")}>
         {theme === "light" ? (
           <MdLightMode size={size} />
         ) : (
           <MdOutlineLightMode size={size} />
         )}
-      </a>
-      <a href="javascript:void(0)" onClick={() => setTheme("dark")}>
+      </span>
+      <span className="cursor-pointer" onClick={() => setTheme("dark")}>
         {theme === "light" ? (
           <MdOutlineDarkMode size={size} />
         ) : (
           <MdDarkMode size={size} />
         )}
-      </a>
+      </span>
     </div>
   );
 }

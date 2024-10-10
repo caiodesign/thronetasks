@@ -7,6 +7,7 @@ import HomeDashboard from "./presentations/Dashboard";
 import HomeFooter from "./presentations/Footer";
 import { IActivity } from "@/types/activity";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { randomId } from "@/lib/utils";
 
 export default function HomeContainer() {
   const {
@@ -17,6 +18,8 @@ export default function HomeContainer() {
     getTotalTasksDone,
     getWeeklyTasksDone,
     getLastWeeklyTasksDone,
+    addActivity,
+    removeActivity,
   } = useActivitiesContext();
 
   const dailyActivities = filterActivitiesByType("daily");
@@ -24,6 +27,30 @@ export default function HomeContainer() {
 
   function onToggleAll(type: IActivity["type"], allSelected: boolean) {
     toggleAllByType(type, allSelected);
+  }
+
+  function onRemove(id: string) {
+    removeActivity(id);
+  }
+
+  function onSubmit(
+    event: React.FormEvent<HTMLFormElement>,
+    type: IActivity["type"]
+  ) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const taskInput = form.task as HTMLInputElement;
+
+    addActivity({
+      type,
+      id: randomId(),
+      title: taskInput.value,
+      description: "custom activity",
+      custom: true,
+      done: false,
+    });
+
+    taskInput.value = "";
   }
 
   return (
@@ -43,6 +70,8 @@ export default function HomeContainer() {
                 type="daily"
                 onToggle={(id) => toggleActivityDone(id)}
                 onToggleAll={onToggleAll}
+                onSubmit={onSubmit}
+                onRemove={onRemove}
               >
                 We have selected some important daily tasks that you may want to
                 consider.
@@ -54,6 +83,8 @@ export default function HomeContainer() {
                 type="weekly"
                 onToggle={(id) => toggleActivityDone(id)}
                 onToggleAll={onToggleAll}
+                onSubmit={onSubmit}
+                onRemove={onRemove}
               >
                 We have also selected some key weekly tasks that you may find
                 useful.

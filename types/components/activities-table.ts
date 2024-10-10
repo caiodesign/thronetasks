@@ -4,4 +4,5 @@ export type IActivitiesProps = {
   activities: IActivity[];
   onToggleAll: (allSelected: boolean) => void;
   onActivityToggle: (id: string) => void;
+  onRemove: (id: string) => void;
 };
