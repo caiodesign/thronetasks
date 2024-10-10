@@ -181,7 +181,7 @@ export default function useActivities(initialActivities: IActivity[]) {
 
     const lastVisit = loadFromLocalStorage(LAST_VISIT_KEY);
     const now = new Date();
-    const dailyStartHour = 3;
+    const dailyStartHour = 6;
 
     if (!lastVisit) {
       // If there's no last visit recorded, store the current time
@@ -196,7 +196,7 @@ export default function useActivities(initialActivities: IActivity[]) {
 
     let updatedActivities = [...activities];
 
-    // Daily reset: If the day has changed and it's past 3:00 AM
+    // Daily reset: If the day has changed and it's past 6:00 AM
     if (isNewDay && isPastResetHour) {
       updatedActivities = resetTasks(updatedActivities, "daily");
     }
