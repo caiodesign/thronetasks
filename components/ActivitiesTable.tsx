@@ -83,7 +83,7 @@ export default function ActivitiesTable({
               </TableCell>
 
               <TableCell className="font-medium">
-                <span>{activity.title}</span>
+                <span className="text-xs md:text-sm">{activity.title}</span>
                 <Tooltip>
                   <TooltipTrigger className="h-full align-middle">
                     <InfoIcon
