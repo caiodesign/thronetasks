@@ -7,6 +7,7 @@ import { ActivitiesProvider } from "@/app/hooks/use-activities/activitiesContext
 import data from "@/activities.json";
 import { loadFromLocalStorage } from "@/lib/localstorage-helper";
 import { ACTIVITIES_KEY } from "./constants/activities";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function Home() {
   const [activities, setActivities] = useState();
@@ -18,6 +19,7 @@ export default function Home() {
 
   return activities ? (
     <div className="container mx-auto">
+      <Analytics />
       <ActivitiesProvider initialActivities={activities as IActivity[]}>
         <HomeContainer />
       </ActivitiesProvider>
