@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IActivity } from "@/types/activity";
 import {
   loadFromLocalStorage,
@@ -13,18 +13,15 @@ import {
   CHART_DATA_KEY,
   TOTAL_DONE_KEY,
   TOTAL_LAST_WEEKLY_DONE_KEY,
+  LAST_VISIT_KEY,
 } from "@/app/constants/activities";
-
-const resetTasks = (activities: IActivity[], type: IActivity["type"]) => {
-  return activities.map((activity) =>
-    activity.type === type ? { ...activity, done: false } : activity
-  );
-};
 
 export default function useActivities(initialActivities: IActivity[]) {
   const [activities, setActivities] = useState<IActivity[]>(
     loadFromLocalStorage(ACTIVITIES_KEY) || initialActivities
   );
+
+  const hasCheckedAndResetTasks = useRef(false); // Ref to track if the check has been done
 
   const defaultChartData = [
     { day: "monday", daily: 0, weekly: 0 },
@@ -48,6 +45,9 @@ export default function useActivities(initialActivities: IActivity[]) {
     saveToLocalStorage(ACTIVITIES_KEY, updatedActivities);
     setActivities(updatedActivities);
     updateChartData(updatedActivities);
+
+    console.log(updatedActivities);
+    console.log("done");
   };
 
   const saveChartData = (updatedChartData: typeof defaultChartData) => {
@@ -169,38 +169,70 @@ export default function useActivities(initialActivities: IActivity[]) {
     return loadFromLocalStorage(TOTAL_LAST_WEEKLY_DONE_KEY);
   };
 
-  useEffect(() => {
-    const now = new Date();
-    const nextDailyReset = new Date();
-    nextDailyReset.setHours(3, 0, 0, 0);
-    if (now >= nextDailyReset)
-      nextDailyReset.setDate(nextDailyReset.getDate() + 1);
-
-    const nextWeeklyReset = new Date();
-    nextWeeklyReset.setHours(3, 0, 0, 0);
-    nextWeeklyReset.setDate(
-      nextWeeklyReset.getDate() + ((8 - nextWeeklyReset.getDay()) % 7)
+  const resetTasks = (activities: IActivity[], type: IActivity["type"]) => {
+    return activities.map((activity) =>
+      activity.type === type ? { ...activity, done: false } : activity
     );
+  };
 
-    const dailyTimeout = nextDailyReset.getTime() - now.getTime();
-    const weeklyTimeout = nextWeeklyReset.getTime() - now.getTime();
+  const checkAndResetTasks = () => {
+    if (hasCheckedAndResetTasks.current) return;
+    hasCheckedAndResetTasks.current = true;
 
-    const dailyTimer = setTimeout(() => {
-      const updatedActivities = resetTasks(activities, "daily");
-      saveActivities(updatedActivities);
-    }, dailyTimeout);
+    const lastVisit = loadFromLocalStorage(LAST_VISIT_KEY);
+    const now = new Date();
+    const dailyStartHour = 3;
 
-    const weeklyTimer = setTimeout(() => {
+    if (!lastVisit) {
+      // If there's no last visit recorded, store the current time
+      saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
+      return;
+    }
+
+    const lastVisitDate = new Date(lastVisit);
+
+    const isNewDay = now.getDate() !== lastVisitDate.getDate();
+    const isPastResetHour = now.getHours() >= dailyStartHour;
+
+    let updatedActivities = [...activities];
+
+    // Daily reset: If the day has changed and it's past 3:00 AM
+    if (isNewDay && isPastResetHour) {
+      updatedActivities = resetTasks(updatedActivities, "daily");
+    }
+
+    // Determine the start of the current week for the game (Wednesday at 6:00 AM)
+    const currentWeekStart = new Date(now);
+    currentWeekStart.setDate(now.getDate() - ((now.getDay() + 4) % 7)); // Move to the previous Wednesday
+    currentWeekStart.setHours(6, 0, 0, 0); // Set to 6:00 AM
+
+    const lastWeekStart = new Date(lastVisitDate);
+    lastWeekStart.setDate(
+      lastVisitDate.getDate() - ((lastVisitDate.getDay() + 4) % 7)
+    ); // Move to the previous Wednesday
+    lastWeekStart.setHours(6, 0, 0, 0); // Set to 6:00 AM
+
+    const isNewGameWeek =
+      currentWeekStart > lastWeekStart && now >= currentWeekStart;
+
+    // Weekly reset: If it is a new game week and the current time is past Wednesday 6:00 AM
+    if (isNewGameWeek) {
       updateWeeklyDone();
-      const updatedActivities = resetTasks(activities, "weekly");
-      saveActivities(updatedActivities);
-    }, weeklyTimeout);
+      updatedActivities = resetTasks(updatedActivities, "weekly");
+    }
 
-    return () => {
-      clearTimeout(dailyTimer);
-      clearTimeout(weeklyTimer);
-    };
-  }, [activities]);
+    // Save the activities only once at the end if any resets occurred
+    if ((isNewDay && isPastResetHour) || isNewGameWeek) {
+      saveActivities(updatedActivities);
+    }
+
+    // Update last visit date after checking and resetting
+    saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
+  };
+
+  useEffect(() => {
+    checkAndResetTasks();
+  }, []);
 
   return {
     activities,
