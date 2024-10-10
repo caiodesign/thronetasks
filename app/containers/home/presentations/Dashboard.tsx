@@ -65,7 +65,7 @@ export default function Dashboard({
             </p>
           </CardContent>
         </Card>
-        <Card className="mb-3 w-full">
+        <Card className="mb-3 ml-3 w-full md:ml-0">
           <CardHeader className="pb-2">
             <div className="flex justify-between">
               <h4 className="text-sm font-medium tracking-tighter">
@@ -77,7 +77,9 @@ export default function Dashboard({
           <CardContent>
             <p className="text-2xl font-bold">{weeklyTasksDone}</p>
             <p className="text-xs text-muted-foreground">
-              {weeklyPercentage}% from last week
+              {weeklyTasksDone
+                ? `${weeklyPercentage}% from last week`
+                : "complete a weekly task to start"}
             </p>
           </CardContent>
         </Card>

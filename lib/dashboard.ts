@@ -13,5 +13,7 @@ export function calculateWeeklyChange(
   const percentageChange = (difference / lastWeekTotal) * 100;
 
   // Format the result with a "+" sign for positive values
-  return percentageChange > 0 ? `+${percentageChange}` : `${percentageChange}`;
+  return percentageChange > 0
+    ? `+${percentageChange.toFixed(0)}`
+    : `${percentageChange.toFixed(0)}`;
 }
