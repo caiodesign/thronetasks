@@ -64,7 +64,7 @@ export default function ActivitiesTable({
             <TableHead className="capitalize px-2 text-left align-middle font-medium text-muted-foreground ">
               task
             </TableHead>
-            <TableHead className="text-center capitalize px-2 align-middle font-medium text-muted-foreground w-[30px]">
+            <TableHead className="text-center capitalize px-2 align-middle font-medium text-muted-foreground w-8">
               status
             </TableHead>
           </TableRow>
