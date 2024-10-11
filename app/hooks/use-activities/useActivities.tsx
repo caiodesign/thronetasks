@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import moment from "moment";
 import { IActivity } from "@/types/activity";
 import {
   loadFromLocalStorage,
@@ -182,10 +183,16 @@ export default function useActivities(initialActivities: IActivity[]) {
     const lastVisit = loadFromLocalStorage(LAST_VISIT_KEY);
     const now = new Date();
     const dailyStartHour = 6;
+    const timezoneOffset = now.getTimezoneOffset() * 60000; // offset in milliseconds
+    const localISOTime = new Date(now.getTime() - timezoneOffset)
+      .toISOString()
+      .slice(0, -1); // Remove 'Z' to indicate local time
+
+    console.log(localISOTime);
 
     if (!lastVisit) {
       // If there's no last visit recorded, store the current time
-      saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
+      saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
       return;
     }
 
@@ -227,7 +234,7 @@ export default function useActivities(initialActivities: IActivity[]) {
     }
 
     // Update last visit date after checking and resetting
-    saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
+    saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
   };
 
   useEffect(() => {
