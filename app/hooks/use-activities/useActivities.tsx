@@ -185,7 +185,7 @@ export default function useActivities(initialActivities: IActivity[]) {
 
     if (!lastVisit) {
       // If there's no last visit recorded, store the current time
-      saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
+      saveToLocalStorage(LAST_VISIT_KEY, now.toString());
       return;
     }
 
@@ -227,7 +227,7 @@ export default function useActivities(initialActivities: IActivity[]) {
     }
 
     // Update last visit date after checking and resetting
-    saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
+    saveToLocalStorage(LAST_VISIT_KEY, now.toString());
   };
 
   useEffect(() => {
