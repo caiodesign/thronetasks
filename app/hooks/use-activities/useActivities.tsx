@@ -185,7 +185,7 @@ export default function useActivities(initialActivities: IActivity[]) {
 
     if (!lastVisit) {
       // If there's no last visit recorded, store the current time
-      saveToLocalStorage(LAST_VISIT_KEY, now.toString());
+      saveToLocalStorage(LAST_VISIT_KEY, now.toISOString());
       return;
     }
 
