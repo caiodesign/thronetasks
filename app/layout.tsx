@@ -9,7 +9,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Throne Tasks",
   description:
-    "ThroneTasks is your simple companion for tracking daily and weekly activities in Throne and Liberty! With ThroneTasks, you’ll never miss out on important quests, bosses, or challenges.",
+    "Throne Tasks is your simple companion for tracking daily and weekly activities in Throne and Liberty! With Throne Tasks, you’ll never miss out on important quests, bosses, or challenges.",
 };
 
 export default function RootLayout({
