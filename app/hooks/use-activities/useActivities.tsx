@@ -2,7 +2,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import moment from "moment";
 import { IActivity } from "@/types/activity";
 import {
   loadFromLocalStorage,
@@ -46,9 +45,6 @@ export default function useActivities(initialActivities: IActivity[]) {
     saveToLocalStorage(ACTIVITIES_KEY, updatedActivities);
     setActivities(updatedActivities);
     updateChartData(updatedActivities);
-
-    console.log(updatedActivities);
-    console.log("done");
   };
 
   const saveChartData = (updatedChartData: typeof defaultChartData) => {
@@ -188,8 +184,6 @@ export default function useActivities(initialActivities: IActivity[]) {
       .toISOString()
       .slice(0, -1); // Remove 'Z' to indicate local time
 
-    console.log(localISOTime);
-
     if (!lastVisit) {
       // If there's no last visit recorded, store the current time
       saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
@@ -234,7 +228,7 @@ export default function useActivities(initialActivities: IActivity[]) {
     }
 
     // Update last visit date after checking and resetting
-    saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
+    // saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
   };
 
   useEffect(() => {
