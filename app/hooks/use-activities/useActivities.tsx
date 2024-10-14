@@ -227,8 +227,7 @@ export default function useActivities(initialActivities: IActivity[]) {
       saveActivities(updatedActivities);
     }
 
-    // Update last visit date after checking and resetting
-    // saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
+    saveToLocalStorage(LAST_VISIT_KEY, localISOTime);
   };
 
   useEffect(() => {
