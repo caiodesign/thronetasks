@@ -1,7 +1,7 @@
 ## About
 Throne Tasks is your simple companion for tracking daily and weekly activities in Throne and Liberty! With Throne Tasks, you’ll never miss out on important quests, bosses, or challenges.
 
-Check it on `thronetasks.com](https:/www.thronetasks.com).
+Check it on [thronetasks.com](https:/www.thronetasks.com).
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
